@@ -1,0 +1,167 @@
+@import url('https://fonts.googleapis.com/css?family=Khula:400,600,700,800');
+
+body {
+    background-color: rgb(58, 73, 85);
+    color: rgb(230, 230, 230);
+    font-family: "Khula", "Arial", sans-serif;
+}
+
+header h1 {
+    font-size: 72px;
+    text-align: center;
+    margin: 10px auto 0px auto;
+    font-weight: 800;
+}
+
+header p {
+    width: 720px;
+    margin: 0px auto 10px auto;
+    text-align: center;
+    font-size: 16px;
+}
+
+main {
+    width: auto;
+    margin: 10px 20px 10px 20px;
+}
+
+footer {
+    text-align: center;
+    padding-top: 10px;
+}
+
+#graphicsDisplayWrapper {
+    width: 720px;
+    height: 405px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgb(230, 230, 230);
+    margin: 20px auto 10px auto;
+    background-color: rgb(89, 112, 130);
+    overflow: hidden;
+    position: relative;
+}
+
+#graphicsDisplayWrapper .gameGraphic{
+    position: absolute;
+    transition-duration: 1s;
+    transition-timing-function: ease-in-out;
+}
+
+#currentWordWrapper {
+    height: 70px;
+    width: auto;
+    margin: 10px 0px 10px 0px;
+}
+
+#letterButtonsWrapper {
+    width: auto;
+    height: 100px;
+    margin: 30px 0px 10px 0px;
+}
+
+#currentWordTable {
+    height: 60px;
+    width: auto;
+    margin: 0px auto 0px auto;
+    padding: 0px;
+    border-spacing: 10px;
+}
+
+#currentWordTable td {
+    border-bottom: solid;
+    border-bottom-width: 2px;
+    border-bottom-color: rgb(230, 230, 230);
+    color: rgb(230, 230, 230);
+    width: 40px;
+    height: 60px;
+    text-align: center;
+    font-size: 48px;
+    line-height: 100%;
+    vertical-align: middle;
+}
+
+#letterButtonsWrapper div {
+    margin: 0px auto 0px;
+    padding: 0px;
+    text-align: center;
+} 
+
+#letterButtonsWrapper button {
+    width: 36px;
+    height: 36px;
+    border-radius: 5px;
+    border-style: none;
+    color: rgb(230, 230, 230);
+    font-size: 18px;
+    font-weight: 400;
+    text-align: center;
+    margin: 5px;
+    transition-duration: 0.5s;
+}
+
+#letterButtonsWrapper button.untired {
+    background-color: rgb(70, 119, 200);
+    color: rgb(230, 230, 230);
+}
+
+#letterButtonsWrapper button.nomatch {
+    background-color: rgb(135, 135, 135);
+}
+
+#letterButtonsWrapper button.match {
+    background-color: rgb(70, 200, 75);
+}
+
+#letterButtonsWrapper button.untired:hover {
+    background-color: rgb(15, 107, 255);
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+}
+
+#newGameButton {
+    font-size: 18px;
+    font-weight: 400;
+    color: rgb(230, 230, 230);
+    background-color: rgb(70, 119, 200);
+    width: auto;
+    padding: 6px 20px 6px 20px;
+    margin: 4px 10px 4px 10px;
+    border-radius: 10px;
+    border-style: none;
+    transition-duration: 0.5s;
+}
+
+#newGameButton:hover {
+    cursor: pointer;
+    color: rgb(255, 255, 255);
+    background-color: rgb(15, 107, 255);
+}
+
+#gameOverMessage {
+    position: absolute;
+    width: 700px;
+    height: auto;
+    text-align: center;
+    top: 100px;
+    margin: 0px;
+    padding: 10px 10px 10px 10px;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+#gameOverMessage h2 {
+    color: rgb(255, 255, 255);
+    font-weight: 800;
+    font-size: 48px;
+    text-align: center;
+    margin: 5px;
+}
+
+#gameOverMessage p {
+    color: rgb(255, 255, 255);
+    font-style: 18px;
+    width: 500px;
+    height: auto;
+    text-align: center;
+    margin: 5px auto 5px auto;
+}
