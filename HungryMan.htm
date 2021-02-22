@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<title>Hungry Man</title>
+		
+		<!--link to style sheets and scripts-->
+		<link rel="stylesheet" type="text/css" href="css/HMPrebuilt.css" />
+		<link rel="stylesheet" type="text/css" href="css/HungryMan.css" />
+		<script type="text/javascript" src="js/GameGraphics.js"></script>
+		<script type="text/javascript" src="js/WordList.js"></script>
+		<script type="text/javascript" src="js/HungryMan.js"></script>
+		<script type="text/javascript" src="js/gameControl.js"></script>
+		
+	</head>
+	
+	<body>
+		<header>
+			<h1>Hungry Man</h1>
+			<p>Hungry Man wants to eat your lunch, the greedy-guts! He's thinking of a mystery word and, if you can guess it, letter-by-letter, he'll let you keep your food. But beware - each time you guess a letter incorrectly your food will get nearer to his mouth - when it gets there he's going to munch it all up!</p>			
+		</header>
+		
+		<main>
+			
+			<section id="graphicsDisplayWrapper">
+				
+			</section>
+			
+			<section id="currentWordWrapper">
+				
+				<table id="currentWordTable">
+					<tbody></tbody>					
+				</table>
+				
+			</section>
+			
+			<section id="letterButtonsWrapper">
+				
+			</section>
+			
+			<audio id="sfxPlayer" preload="true">
+				<source src="sound/gameLost.wav" type="audio/wav"/>
+				<source src="sound/gameLost.mp3" type="audio/mpeg"/>
+			</audio>
+			
+		</main>
+		
+		<footer>
+			<button id="newGameButton" type="button" onclick="startNewGame();">Start New Game</button>
+			
+		</footer>
+		
+		
+	</body>
+	
+</html>
