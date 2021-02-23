@@ -1,137 +1,70 @@
-/*=================================================================================================
--- GLOBAL VARIABLES
-	These variables will be available to all of the page's scripts
--------------------------------------------------------------------------------------------------*/
 var gameEngine;
-/*===============================================================================================*/
 
-/*=================================================================================================
--- ONLOAD LISTENER
--------------------------------------------------------------------------------------------------*/
 window.addEventListener("load", initialiseGame, false);
-/*===============================================================================================*/
 
-/*=================================================================================================
--- FUNCTION: initialiseGame()
-	Starts the game engine, assigning it to the global variable called 'gameEngine'.
-	Also starts a new game.
--------------------------------------------------------------------------------------------------*/
 function initialiseGame() {
-	gameEngine = new com.flametreepublishing.cfk.HungryMan();
+	gameEngine = new com.flametreepublishing.cfk.StarfleetDefence();
 	startNewGame();
-}
-/*===============================================================================================*/
+} 
 
-/*=================================================================================================
--- FUNCTION: startNewGame()
-	Starts a new game by clearing anything that may be left over from a previous game and then
-	resetting all game parameters
--------------------------------------------------------------------------------------------------*/
 function startNewGame() {
-	gameEngine.resetGameGraphics();
-	gameEngine.loadNewWord();
-	var wordLength = gameEngine.getLengthOfCurrentWord();
-	buildCurrentWordDisplay(wordLength);
-	buildLetterButtons();
+	gameEngine.resetGame();
+	gameEngine.buildTargetingGrid();
+	gameEngine.addSpacecraft(5, "Star Destroyer");
+	gameEngine.addSpacecraft(4, "Battle Cruiser");
+	gameEngine.addSpacecraft(3, "Missile Frigate");
+	gameEngine.addSpacecraft(3, "Photon Bomber");
+	gameEngine.addSpacecraft(2, "Laser Fighter");
+	gameEngine.refreshCommandConsole();
 }
-/*===============================================================================================*/
 
-/*=================================================================================================
--- FUNCTION: buildCurrentWordDisplay(numberOfLetters:Number):Void
-	A one row table is used for displaying the "slots" in which the letters of the mystery
-	word are displayed (and shown as empty when the letter is unguessed).
-	This method clears the tr element containing the current word/guesses and then creates a new
-	tr element with the number of td elements indicated by numberOfLetters 
--------------------------------------------------------------------------------------------------*/
-function buildCurrentWordDisplay(numberOfLetters) {
-	var currentWordTBody = document.getElementById("currentWordTable").getElementsByTagName("tbody")[0];
-	while (currentWordTBody.hasChildNodes()) {
-		currentWordTBody.removeChild(currentWordTBody.firstChild);
-	}
-	var newRow = document.createElement("tr");
-	var newCell;
-	for (var i = 0; i < numberOfLetters; i++) {
-		newCell = document.createElement("td");
-		newRow.appendChild(newCell);
-	}
-	currentWordTBody.appendChild(newRow);
-}
-/*===============================================================================================*/
-
-/*=================================================================================================
--- FUNCTION: buildLetterButtons():Void
-	Clears the letter buttons from the previous game (if any exist) and then creates a new set
-	of 26 buttons that the player clicks to guess a letter. The buttons are arranged in two rows,
-	each row being a div element
--------------------------------------------------------------------------------------------------*/
-function buildLetterButtons() {
-	var letterButtonsWrapper = document.getElementById("letterButtonsWrapper");
-	while (letterButtonsWrapper.hasChildNodes()) {
-		letterButtonsWrapper.removeChild(letterButtonsWrapper.firstChild);
-	}
-	var row1 = document.createElement("div");
-	var row2 = document.createElement("div");
-	for (var i = 65; i <= 90; i++) {
-		var newButton = document.createElement("button");
-		var theLetter = String.fromCharCode(i);
-		newButton.innerHTML = theLetter;
-		newButton.setAttribute("letter", theLetter);
-		newButton.className = "untried";
-		newButton.addEventListener("click", guessLetter, false);
-		if (i < 78) {
-			row1.appendChild(newButton);
-		} else {
-			row2.appendChild(newButton);
-		}
-	}
-	letterButtonsWrapper.appendChild(row1);
-	letterButtonsWrapper.appendChild(row2);	
-}
-/*===============================================================================================*/
-
-
-/*=================================================================================================
--- FUNCTION / EVENT HANDLER: tryLetter(eventObj:Object)
-	Triggered when the player clicks on a letter button. Handles the subsequent actions
--------------------------------------------------------------------------------------------------*/
-function guessLetter(eventObj) {
-	if (gameEngine.isGameOver()) {
-		//the game is over, so exit the function without doing anything
+function takeShot(eventObj) {
+	if (gameEngine.gameOver) {
 		return;
 	}
-	var clickedButton = eventObj.target;
-	var letterToGuess = clickedButton.getAttribute("letter");
-	if (gameEngine.hasLetterBeenTried(letterToGuess)) {
-		window.alert("You have already tried the letter " + letterToGuess);
-		return;
-	}
-	var guessResult = gameEngine.guessLetter(letterToGuess);
-	var isGameOver;
-	var isGameLost = false;
-	if (guessResult.length == 0) {
-		clickedButton.className = "nomatch";
-		isGameOver = gameEngine.registerIncorrectGuess();
-		if(isGameOver) {
-			isGameLost = true;
-		}
+	var clickedTDElement = eventObj.target;
+	var clickedX = clickedTDElement.getAttribute("coordinate_x");
+	var clickedY = clickedTDElement.getAttribute("coordinate_y");
+	var target = new com.flametreepublishing.cfk.TargetingCoordinate(clickedX, clickedY);
+	var hitTestResult = gameEngine.hitTest(target);
+	if (hitTestResult == "oob") {
+		gameEngine.playSound("sfx_cantShoot");
+		gameEngine.setMessage("The location you targeted is outside of your quadrant.<br>Try again.");
+	} else if (hitTestResult == "repeat shot") {
+		gameEngine.playSound("sfx_cantShoot");
+		gameEngine.setMessage("You have already shot at that coordinate.<br>Try again.");
+	} else if (hitTestResult == "miss") {
+		gameEngine.logShot(target);
+		gameEngine.updateCurrentScore();
+		gameEngine.playSound("sfx_shootAndMiss");
+		gameEngine.setMessage("Missed! No enemy spacecraft at that coordinate.<br>Try again.");
+		clickedTDElement.className = "targetingGridCell missed";
 	} else {
-		clickedButton.className = "match";
-		var currentWordCells = document.getElementById("currentWordWrapper").getElementsByTagName("td");
-		for (var i = 0; i < guessResult.length; i++) {
-			var thisMatchPosition = guessResult[i];
-			currentWordCells[(thisMatchPosition)].innerHTML = letterToGuess;
-		}
-		isGameOver = gameEngine.isWordGuessed();
-	}
-	if (isGameOver) {
-		if (isGameLost) {
-			gameEngine.eatTheFood();
+		var theSpacecraft = gameEngine.getSpacecraftByName(hitTestResult);
+		gameEngine.logShot(target);
+		gameEngine.updateCurrentScore();
+		clickedTDElement.className = "targetingGridCell hit";		
+		clickedTDElement.innerHTML = theSpacecraft.getAcronym();		
+		var isDestroyed = theSpacecraft.takeHit(target);
+		if (isDestroyed) {
+			gameEngine.playSound("sfx_shootAndDestroy");
+			gameEngine.setMessage("Great shooting! You hit and destroyed the enemy's " + theSpacecraft.craftName + ".<br>" + String(gameEngine.remainingCraftCount()) + " enemy craft remaining. Keep it up!");
+			gameEngine.spacecraftDestroyed();
 		} else {
-			gameEngine.reportGameOver();
-		}
+			gameEngine.playSound("sfx_shootAndHit");
+			gameEngine.setMessage("Good shot. You hit enemy's " + theSpacecraft.craftName + ".<br>Try to finish it off.");
+		}		
 	}
+	if (gameEngine.gameOver) {
+		var bestScoreBeaten = gameEngine.updateBestScore();
+		if (bestScoreBeaten) {
+			gameEngine.setMessage("Awesome! You've destroyed all of the alien spacecraft with a record number of shots.<br>Walk tall, commander.")
+		} else {
+			gameEngine.setMessage("Well done commander - you've destroyed all of the alien spacecraft.");
+		}		
+	}
+	
 }
-/*===============================================================================================*/
 
 
 
