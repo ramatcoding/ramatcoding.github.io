@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <title>CSS Animation</title>
+        <style>
+            #boxToMove {
+               position: relative;
+               width: 100px;
+               height: 100px;
+               background-color: red;
+               animation-name: boxMover;
+               animation-duration: 3s;
+               animation-iteration-count: infinite;
+            }
+
+            @keyframes boxMover {
+                0% {top: 0px;}
+                25% {top: 100px;}
+                75% {top: 50px;}
+                100% {top: 150px;}
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="boxToMove">
+
+        </div>
+    </body>
+
+</html>
