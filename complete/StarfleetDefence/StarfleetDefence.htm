@@ -1,0 +1,118 @@
+<!DOCTYPE HTML>
+
+<html>
+	
+	<head>
+		<meta charset="utf-8"/>
+		<title>Starfleet Defence</title>
+		
+		<link rel="stylesheet" type="text/css" href="css/StarfleetDefence.css"/>
+		<script type="text/javascript" src="js/TargetingCoordinate.js"></script>
+		<script type="text/javascript" src="js/Spacecraft.js"></script>
+		<script type="text/javascript" src="js/StarfleetDefence.js"></script>
+		<script type="text/javascript" src="js/gameControl.js"></script>		
+	</head>
+	
+	<body>
+		<header>
+			<h1>Starfleet Defence</h1>
+		</header>
+		
+		<main>
+			
+			<section id="leftPanel">
+				
+				<div id="commandConsoleWrapper">
+					
+					<p class="panelTitle">Command Console</p>
+					
+					<div id="commandConsole">
+						
+						<p class="fieldTitle">Incoming Comms</p>
+						<p id="messagePanel" class="commsField"></p>
+						
+						<p class="fieldTitle">Current Scrore</p>
+						<p id="currentScorePanel" class="commsField">0</p>
+						
+						<p class="fieldTitle">Best Score</p>
+						<p id="bestScorePanel" class="commsField">100</p>
+						
+					</div>
+					
+				</div>
+				
+				<div id="enemyFleetPanelWrapper">
+					
+					<p class="panelTitle">Enemy Fleet</p>
+					<div id="enemyFleetPanel">
+						
+						<table id="enemyFleetPanelTable">
+							<thead>
+								<tr>
+									<td>Spacecraft Name</td>
+									<td>Size</td>
+									<td>Hits</td>									
+								</tr>
+							</thead>
+							<tbody id="enemyFleetPanelTableBody">
+							</tbody>							
+						</table>
+						
+					</div>
+					
+				</div>			
+				
+			</section>
+			
+			<section id="rightPanel">
+				
+				<div id="targetingGridWrapper">
+					
+					<p class="panelTitle">Targeting Panel</p>
+					
+				</div>
+				
+			</section>
+			
+			<audio id="sfx_cantShoot" preload="true">
+				<source src="sound/cantShoot.wav" type="audio/wav"/>
+				<source src="sound/cantShoot.mp3" type="audio/mpeg"/>
+			</audio>
+			
+			<audio id="sfx_shootAndMiss" preload="true">
+				<source src="sound/shootAndMiss.wav" type="audio/wav"/>
+				<source src="sound/shootAndMiss.mp3" type="audio/mpeg"/>
+			</audio>
+			
+			<audio id="sfx_shootAndHit" preload="true">
+				<source src="sound/shootAndHit.wav" type="audio/wav"/>
+				<source src="sound/shootAndHit.mp3" type="audio/mpeg"/>
+			</audio>
+ 			
+			<audio id="sfx_shootAndDestroy" preload="true">
+				<source src="sound/shootAndDestroy.wav" type="audio/wav"/> 
+				<source src="sound/shootAndDestroy.mp3" type="audio/mpeg"/>
+			</audio> 
+			
+		</main>
+		
+		<footer>
+			
+			<button id="newGameButton"
+					type="button"
+					onclick="startNewGame();">
+				Start New Game
+			</button>
+			
+			<button id="resetBestScoreButton"
+					type="button"
+					onclick="gameEngine.resetBestScore();">
+				Reset Best Score
+			</button>
+			
+		</footer>
+		
+	</body>
+	
+	
+</html>
