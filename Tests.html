@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <title>Tests</title>
+
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap');
+
+            p {
+                font-family: 'Poppins', sans-serif;
+            }
+
+            body {
+                background-color: slategrey;
+            }
+        </style>
+    </head>
+
+
+    <body>
+
+        <script>
+            function time (time) {
+                return time;// makes the function into a variable that stores something (which is speed);
+            } // the time function
+            function speed (speed) {
+                return speed;// makes the function into a vaiable like time(time);
+            }// the speed function
+            var getDistanceparameter1 = prompt("What is the speed of the Object in mph?");
+            var s = speed(getDistanceparameter1);// stores the speed in a variable
+            var getDistanceparameter2 = prompt("How long did it take to get down to the ground in sec?");
+            var t = time(getDistanceparameter2)// stores the time in a varible
+            function getDistance (speed, time) {
+                var variableDistance = speed * time;// makes the distance
+
+                return variableDistance;// makes the function into a variable like speed(speed) and time(time);
+            }// the getDistance function
+
+            function GDF (spd, tmd) {
+                var p1 = spd * tmd,
+                p2 = p1 * 1,
+                p3 = p1 + p2 * 2,
+                p4 = p1 + p2 + p3 * 3,
+                p5 = p1 + p2 + p3 + p4 * 4,
+                p6 = p1 + p2 + p3 + p4 + p5 * 5,
+                odd = p1 + p3 + p5,
+                even = p2 + p4,
+                together = odd + even;
+
+                return together;
+            }
+            var theDistance = getDistance(speed(s)/* speed function storing s as speed in the speed function stored as speed in getDistance function */, time(t)/* time function storing t as time in the time function stored as time in getDistance function*/);
+
+            alert("Your distance for the Object is: " + theDistance + " meter's!");// alert's theDistance
+
+            if (theDistance > 1 && theDistance < 10) {
+                console.log("10 to the power of 0 & 1");
+            } else if (theDistance > 10 && theDistance < 100) {
+                console.log("10 to the power of 1 & 2");
+            } else if (theDistance > 100 && theDistance < 1000) {
+                console.log("10 to the power of 2 & 3");
+            } else if (theDistance > 1000 && theDistance < 10000) {
+                console.log("10 to the power of 3 & 4");
+            } else if (theDistance > 10000 && theDistance < 100000) {
+                console.log("10 to the power of 4 & 5");
+            } else if (theDistance > 100000 && theDistance < 1000000) {
+                console.log("10 to the power of 5 & 6");
+            } else if (theDistance > 1000000 && theDistance < 10000000) {
+                console.log("10 to the power of 6 & 7");
+            } else if (theDistance > 10000000 && theDistance < 100000000) {
+                console.log("10 to the power of 7 & 8");
+            } else if (theDistance > 100000000) {
+                console.log("This is too big.. *dies*!");
+            }
+
+            var GDFTOTAL = GDF(speed(s), time(t));
+            console.log("The GDFs is " + GDFTOTAL / 2 * 3 / 4 * 5);
+            console.log("The GDF is " + GDFTOTAL);
+            console.log("Meet me at github! My username is ramatcoding. Visit ramatcoding.github.io!")
+
+            alert("I hope you use my website again! :)")// ©
+        </script>
+
+        <p>Press CTRL + SHIFT + J (On Windows and Liunx), CMD + SHIFT + J (Mac)!</p>
+        <p>Type GDFTOTAL in the console.</p>
+        <p>Then type GDF in the console.</p>
+        <p>After you type GDF in the console you'll see the function of the GDF.</p>
+        <p>Now type getDistance in the console.</p>
+        <p>Now you see the getDistance function.</p>
+        <p>After that type speed.</p>
+        <p>Now you see the speed function.</p>
+        <p>Finally type time in the console.</p>
+        <p>You see the time function.</p>
+    </body>
+
+</html>
